@@ -1,0 +1,23 @@
+//Symbol Name		Page Address
+//----------------	------------
+//	A                       3044
+//	AGAIN                   301C
+//	AHOLD                   3042
+//	ANUM                    3040
+//	B                       3045
+//	BB                      3031
+//	BHOLD                   3043
+//	BNUM                    3041
+//	BUBBLE                  3046
+//	COPY                    303E
+//	COUNTER                 303F
+//	DATA                    303D
+//	FINISH                  303A
+//	LOOP1                   3003
+//	LOOP2                   300B
+//	LOOP3                   300E
+//	LOOP4                   3022
+//	NEXT1                   300A
+//	NEXT2                   301E
+//	RIGHT                   301A
+//	TAIL                    3037

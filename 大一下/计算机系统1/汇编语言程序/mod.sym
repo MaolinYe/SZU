@@ -1,0 +1,8 @@
+//Symbol Name		Page Address
+//----------------	------------
+//	ace                     300B
+//	dividend                300C
+//	divisor                 300D
+//	loop                    3005
+//	quotient                300E
+//	remainder               300F

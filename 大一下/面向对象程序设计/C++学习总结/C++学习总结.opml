@@ -1,0 +1,2343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+	<head>
+		<dateCreated>Sat Apr 30 2022 22:20:31 GMT+0800 (中国标准时间)</dateCreated>
+		<dateModified>Sat Apr 30 2022 22:20:31 GMT+0800 (中国标准时间)</dateModified>
+	</head>
+	<body>
+		<outline text="C++学习总结">
+			<outline text="内存分区模型">
+				<outline text="代码区">
+					<outline text="存放函数的二级制代码，由操作系统进行管理的"></outline>
+				</outline>
+				<outline text="全局区">
+					<outline text="存放全局变量和静态变量以及常量"></outline>
+				</outline>
+				<outline text="栈区">
+					<outline text="由编译器自动分配释放，存放函数的参数值，局部变量等"></outline>
+				</outline>
+				<outline text="堆区">
+					<outline text="由编译器自动分配释放，存放函数的参数值，局部变量等"></outline>
+				</outline>
+				<outline text="内存四区的意义">
+					<outline text="不同区域存放的数据，赋予不同的声明周期，给我们更大的灵活编程"></outline>
+				</outline>
+				<outline text="程序运行前">
+					<outline text="代码区"></outline>
+					<outline text="全局区">
+						<outline text="全局变量和静态变量存放于此"></outline>
+						<outline text="全局区还包含了常量区，字符串常量和其他常量也存放于此"></outline>
+						<outline text="该区域的数据在程序结束之后由操作系统释放"></outline>
+					</outline>
+				</outline>
+				<outline text="程序运行后">
+					<outline text="栈区">
+						<outline text="由编译器自动分配释放，存放函数的参数值，局部变量等。"></outline>
+						<outline text="注意事项：不要返回局部变量的地址，栈区开辟的数据由编译器自动释放"></outline>
+					</outline>
+					<outline text="堆区">
+						<outline text="有程序员分配释放，若程序员不释放，程序结束之后有操作系统回收"></outline>
+						<outline text="在C++中主要利用new在堆区中开辟内存"></outline>
+					</outline>
+				</outline>
+				<outline text="new运算符">
+					<outline text="在堆区开辟数据"></outline>
+					<outline text="堆区开辟的数据，由程序员手动开辟，手动释放，释放用delete"></outline>
+					<outline text="示例用法">
+						<outline text="创建">
+							<outline text="int* p = new int(10);//分配一个整型，值为10，p指向它"></outline>
+							<outline text="int* arry = new int[10];//分配一个人10个int的数组;p指向第一个int"></outline>
+						</outline>
+						<outline text="删除">
+							<outline text="delete p;			//p必须指向一个动态分配的对象或为空"></outline>
+							<outline text="delete[] arry;	//arry必须指向一个动态分配的数组或为空"></outline>
+						</outline>
+					</outline>
+				</outline>
+			</outline>
+			<outline text="引用">
+				<outline text="作用">
+					<outline text="给变量起别名"></outline>
+				</outline>
+				<outline text="语法：数据类型 &amp;别名 = 原名">
+					<outline text="int a = 0;"></outline>
+					<outline text="int &amp;b = a;"></outline>
+					<outline text="//a和b操作的是同一块内存"></outline>
+				</outline>
+				<outline text="注意事项">
+					<outline text="引用必须初始化——告诉它它是谁的别名"></outline>
+					<outline text="引用在初始化之后，不可以改变"></outline>
+				</outline>
+				<outline text="常用用法">
+					<outline text="做函数参数">
+						<outline text="作用">
+							<outline text="函数传参时，可以利用引用让形参修饰实参"></outline>
+						</outline>
+						<outline text="优点">
+							<outline text="可以简化指针修改实参（传址）"></outline>
+						</outline>
+						<outline text="示例">
+							<outline text="void changeNums(int &amp;a,int&amp; b);//引用传递
+int main(void)
+{
+    int a = 10;
+    int b = 20;
+    changeNums(a,b);
+    //引用——其实上面的a就是下面a的一个别名
+    return 0;
+}"></outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="引用本质">
+					<outline text="引用的本质在c++内部实现是一个指针常量,引用一旦被初始化之后就不能更改。"></outline>
+				</outline>
+				<outline text="结论">
+					<outline text="C++推荐使用引用技术，因为语法方便，引用本质是指针常量，但所有的指针操作编译器都棒我们做了。"></outline>
+				</outline>
+			</outline>
+			<outline text="函数提高">
+				<outline text="函数默认参数">
+					<outline text="在c++中函数形参列表中的形参是可以有默认值的。"></outline>
+					<outline text="语法">
+						<outline text="返回值类型 函数名(参数=默认值)"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="//函数的哪个参数被声明默认了，下面函数调用的时候就可以少传哪个参数，如果有默认值还传了参数，用的就是函数调用传递的参数
+int func(int a,int b =10,int c =23)
+{
+    return a+b+c;
+}
+int main(void)
+{		
+    int ref = func(10);
+    return 0;
+}"></outline>
+					</outline>
+					<outline text="注意事项">
+						<outline text="如果某个位置已经有了默认参数，那么从这个位置往后都要有默认参数"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="//从b开始往后一的参数都有默认参数
+int fun2(int a,int b= 10;int c =20)
+{
+    
+}"></outline>
+					</outline>
+					<outline text="注意事项">
+						<outline text="如果函数的声明有默认参数，函数的实现就不能有默认参数了。"></outline>
+						<outline text="声明和实现只能有一个有默认参数。"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="int fun3(int a = 10;int b = 20);
+int fun3(int a,int b)
+{
+    
+}"></outline>
+					</outline>
+				</outline>
+				<outline text="函数占位参数">
+					<outline text="C++中函数的形参列表里可以有占位参数，用来占位，调用函数的时候必须填补该位置。"></outline>
+					<outline text="语法">
+						<outline text="返回值类型 函数名 （数据类型）{}，"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="void func(int a, int)
+{
+
+}
+int main(void)
+{
+	func(10,1);//这个1传进去是拿不到的，目前阶段的占位参数我们还用不到，但在后面是会用到的。
+	return 0;
+}"></outline>
+					</outline>
+					<outline text="占位参数还可以有默认参数"></outline>
+				</outline>
+				<outline text="函数重载">
+					<outline text="作用">
+						<outline text="函数名可以相同，提高复用性"></outline>
+					</outline>
+					<outline text="函数重载满足条件">
+						<outline text="同一个作用域下"></outline>
+						<outline text="函数名相同"></outline>
+						<outline text="函数参数类型不同或者个数不同或者顺序不同"></outline>
+					</outline>
+					<outline text="注意">
+						<outline text="函数的返回值不可以作为函数重载的条件"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="void func()
+{
+	cout &lt;&lt; &quot;无参数&quot; &lt;&lt; endl;
+}
+void func(int a)
+{
+	cout &lt;&lt; a;
+}
+int main(void)
+{
+    根据函数传递参数的不同调用不同的代码
+	func();
+	func(10);
+	return 0;
+}"></outline>
+					</outline>
+					<outline text="注意事项">
+						<outline text="引用作为函数重载条件"></outline>
+						<outline text="函数重载碰到函数默认参数"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="#include&lt;iostream&gt;
+using namespace std;
+void func(int &amp;a)
+{
+	//int&amp; a =10;不合法
+}
+void func(const int &amp;a)
+{
+	//const int&amp; a =10;合法——编译器自动优化
+}
+
+
+int main(void)
+{
+	func(10);
+	return 0;
+}"></outline>
+						<outline text="#include&lt;iostream&gt;
+using namespace std;
+void func(int a ,int b = 10)
+{
+	
+}
+void func(int a)
+{
+	
+}
+
+
+int main(void)
+{
+	func(10);
+	/*当函数重载碰到默认参数
+	编译器傻了，不知道该调用哪个了
+	——出现二义性
+	——写函数重载就不要加默认参数，避免这种情况的出现*/
+	return 0;
+}"></outline>
+					</outline>
+				</outline>
+			</outline>
+			<outline text="类和对象">
+				<outline text="三大特性">
+					<outline text="封装"></outline>
+					<outline text="继承"></outline>
+					<outline text="多态"></outline>
+				</outline>
+				<outline text="封装">
+					<outline text="意义">
+						<outline text="将属性和行为作为一个整体，表现生活中的事物">
+							<outline text="语法">
+								<outline text="class 类名{访问权限: 属性 / 行为};"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="创建一个圆类，求圆的周长"></outline>
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+double pi = 3.14;
+//class 代表设计一个类，类后面紧跟着的就是类名称
+class Circle
+{
+	//访问权限
+	//公共权限
+public:
+	//属性 
+	//半径
+	int c_r;
+	//行为
+	//获取圆的周长
+	double calculateZC()
+	{
+		return 2 * pi * c_r;
+	}
+};
+int main(void)
+{
+	//通过圆类创建具体的圆(对象)
+	//实例化——通过一个类创建一个对象的过程
+	Circle c1;
+	//给圆对象的属性进行赋值
+	c1.c_r = 10;
+	cout &lt;&lt; &quot;圆的周长为&quot; &lt;&lt; c1.calculateZC() &lt;&lt; endl;
+
+	return 0;
+}"></outline>
+								<outline text="创建一个学生类"></outline>
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+class Student
+{
+
+public:
+	string s_Name;
+	int s_Id;
+	void showStudent()
+	{
+		cout &lt;&lt; &quot;姓名： &quot; &lt;&lt; s_Name &lt;&lt; &quot;ID：&quot; &lt;&lt; s_Id &lt;&lt; endl;
+	}
+	//赋值
+	void inputName(string name)
+	{
+		s_Name = name;
+	}
+};
+
+int main(void)
+{
+	Student s1;
+	//s1.s_Name = &quot;张三&quot;;
+	s1.inputName(&quot;赵六&quot;);
+	s1.s_Id = 123456;
+	s1.showStudent();
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+						<outline text="将属性和行为加以权限控制">
+							<outline text="类在设计时，可以把属性和行为放在不同的权限下，加以控制"></outline>
+							<outline text="访问权限有三种">
+								<outline text="public">
+									<outline text="公共权限——成员类内可以访问，类外可以访问"></outline>
+								</outline>
+								<outline text="protected">
+									<outline text="保护权限——成员类内可以访问，类外不可以访问"></outline>
+								</outline>
+								<outline text="private">
+									<outline text="私有权限——成员类内可以访问，类外不可以访问"></outline>
+								</outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+class Person
+{
+public:
+	string p_name;
+protected:
+	string p_car;
+private:
+	int p_password;
+public:
+	void funcshow()
+	{
+		p_name = &quot;张三&quot;;
+		p_car = &quot;拖拉机&quot;;
+		p_password = 123456;
+	}
+};
+
+int main(void)
+{
+	Person p1;
+	p1.p_name = &quot;王五&quot;;
+	//p1.p_car = &quot;GTR&quot;;protected类外无法访问
+	//p1.p_password = 123;private类外无法访问
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="通俗的例子">
+					<outline text="人可以作为对象，属性有姓名、年龄、身高、体重…行为有唱、跳、跑…"></outline>
+					<outline text="车也可以作为对象，属性有轮胎、方向盘、大灯…行为有载人、放音乐、开空调…"></outline>
+					<outline text="具有相同性质的对象，我们可以抽象称为类，人属于人类，车属于车类…"></outline>
+				</outline>
+				<outline text="类中的属性和行为，我们统称为成员">
+					<outline text="属性-成员属性-成员变量"></outline>
+					<outline text="行为-成员函数-成员方法"></outline>
+				</outline>
+				<outline text="struct和class的区别">
+					<outline text="在C++中struct和class的唯一区别就是默认的访问权限不同。"></outline>
+					<outline text="区别">
+						<outline text="struct默认权限为公共public"></outline>
+						<outline text="class默认权限为私有private"></outline>
+					</outline>
+					<outline text="成员属性设置为私有">
+						<outline text="优点1：将所有成员属性设置为私有，可以自己控制读写权限。"></outline>
+						<outline text="优点2：对于写权限，我们可以检测数据的有效性。"></outline>
+					</outline>
+				</outline>
+				<outline text="实际编程案例">
+					<outline text="设计一个圆类和一个点类判断圆和点的关系。"></outline>
+					<outline text="提示">
+						<outline text="在一个类中可以让另一个类作为这个类的成员"></outline>
+					</outline>
+					<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Point
+{
+public:
+	void setx(int x)
+	{
+		c_x = x;
+	}
+	int getx()
+	{
+		return c_x;
+	}
+	void sety(int y)
+	{
+		c_y = y;
+	}
+	int gety()
+	{
+		return c_y;
+	}
+	//建议将属性设置为私有，对外提供接口
+private:
+	int c_x;
+	int c_y;
+};
+class Circle
+{
+public:
+	void setr(int r)
+	{
+		c_R = r;
+	}
+	int getr()
+	{
+		return c_R;
+	}
+	void setcenter(Point center)
+	{
+		c_center = center;
+	}
+	Point getcenter()
+	{
+		return c_center;
+	}
+private:
+	int c_R;
+	Point c_center;
+};
+//判断
+void isInCircle(Circle &amp;c,Point &amp;p)
+{
+		int distance =
+		(c.getcenter().getx() - p.getx()) * (c.getcenter().getx() - p.getx()) +
+		(c.getcenter().gety() - p.gety()) * (c.getcenter().gety() - p.gety());
+		int rdistance = c.getr() * c.getr();
+		if (distance == rdistance)
+		{
+			cout &lt;&lt; &quot;点在圆上&quot; &lt;&lt; endl;
+		}
+		else if (distance &gt; rdistance)
+		{
+			cout &lt;&lt; &quot;点在圆外&quot; &lt;&lt; endl;
+		}
+		else
+		{
+			cout &lt;&lt; &quot;点在圆内&quot; &lt;&lt; endl;
+		}
+}
+int main(void)
+{
+	Circle c1;
+	c1.setr(10);
+	Point center;
+	center.setx(10);
+	center.sety(10);
+	c1.setcenter(center);
+	Point p1;
+	p1.setx(3);
+	p1.sety(4);
+	//调用判断
+	isInCircle(c1, p1);
+	return 0;	
+}"></outline>
+				</outline>
+				<outline text="将一个类拆分成两个文件的案例">
+					<outline text="point.h">
+						<outline text="#pragma once
+#include&lt;iostream&gt;
+using namespace std;
+class Point
+{
+public:
+	void setx(int x);
+	int getx();
+	void sety(int y);
+	int gety();
+private:
+	int c_x;
+	int c_y;
+};"></outline>
+					</outline>
+					<outline text="point.cpp">
+						<outline text="#include&quot;point.h&quot;
+//Point::告诉编译器这是Point作用域下面的一个成员函数
+void Point::setx(int x)
+{
+	c_x = x;
+}
+int Point::getx()
+{
+	return c_x;
+}
+void Point::sety(int y)
+{
+	Point::c_y = y;
+}
+int Point::gety()
+{
+	return c_y;
+}"></outline>
+					</outline>
+				</outline>
+				<outline text="对象的初始化与清理">
+					<outline text="意义">
+						<outline text="在生活中我们所购买的点子产品大多都有恢复出厂设置，在某一天我们不使用的时候清楚自己的数据来保证自己信息的安全。"></outline>
+						<outline text="C++中的面向对象来源生活，每个对象也会有初识设置以及对象销毁前的清理数据的设置。"></outline>
+						<outline text="对象的初始化和清理也是两个非常重要的安全问题。"></outline>
+						<outline text="一个对象或者变量没有初识状态，对其使用后的后果是未知的。"></outline>
+						<outline text="同样的使用完一个对象或者变量，没有及时进行清理，也会造成一定的安全问题。"></outline>
+						<outline text="C++利用了构造函数和析构函数解决上述问题，这两个函数将会被编译器自动斓用，完成对象初始化和清理工作。对象的初始化和清理工作是编译器强制要我们做的事情，因此如果我们不提供构造和析构，编译器会提供，但是编译器提供的构造函数和析构函数是空实现。"></outline>
+					</outline>
+					<outline text="构造函数">
+						<outline text="作用">
+							<outline text="主要作用在于创建对象时为对象的成员属性赋值，构造函数由编译器自动调用，无须手动调用。"></outline>
+						</outline>
+						<outline text="语法">
+							<outline text="类名(){}"></outline>
+						</outline>
+						<outline text="写法">
+							<outline text="构造函数没有返回值也不写void"></outline>
+							<outline text="函数名称与类名相同"></outline>
+							<outline text="构造函数可以有参数，因此可以发生重载"></outline>
+							<outline text="程序在调用对象的时候会自动调用构造，无须手动调用，而且只会调用一次"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Person
+{
+public:
+	Person()
+	{
+        //不写的也会自动创建一个，只不过里面是空的
+		cout &lt;&lt; &quot;构造函数的调用&quot; &lt;&lt; endl;
+	}
+};
+void test01()
+{
+	Person p;//创建了一个对象但是没有调用这个函数
+}
+int main(void)
+{
+	test01();
+    system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+					</outline>
+					<outline text="构造函数的分类及调用">
+						<outline text="两种分类方式">
+							<outline text="按参数分为:有参构造和无参构造">
+								<outline text="有参构造">
+									<outline text="调用构造函数时必须传递参数，也就是构造函数的括号里面必须有东西"></outline>
+								</outline>
+								<outline text="无参构造">
+									<outline text="构造函数的括号里不能有东西"></outline>
+								</outline>
+							</outline>
+							<outline text="按类型分为:普通构造和拷贝构造">
+								<outline text="普通构造">
+									<outline text="除了拷贝构造之外的就是普通构造"></outline>
+								</outline>
+								<outline text="拷贝构造">
+									<outline text="当调用一个类的构造函数的时候传递一个同样的类进去，并复制传递进去的类构造出一个相同的类"></outline>
+								</outline>
+							</outline>
+						</outline>
+						<outline text="三种调用方式">
+							<outline text="括号法">
+								<outline text="案例">
+									<outline text="Person p;//默认构造函数调用
+	/*注意：使用默认构造函数的时候，不要加(),编译器会认为这是一个函数的声明
+	例如：Person p1();不会认为在创建对象*/
+	Person p2(10);//有参构造函数调用
+	Person p3(p2);//拷贝构造函数调用
+	cout &lt;&lt; &quot;p2的年龄为&quot; &lt;&lt; p2.age &lt;&lt; endl;
+	cout &lt;&lt; &quot;p3的年龄为&quot; &lt;&lt; p3.age &lt;&lt; endl;"></outline>
+								</outline>
+							</outline>
+							<outline text="显示法">
+								<outline text="案例">
+									<outline text="Person p1;//无参
+	Person p2 = Person(10);//有参
+	Person p3 = Person(p2);//拷贝
+	//如果把等号右边的式子单独拿出来
+	//Person(10)这是一个匿名对象-特点——当前行执行结束后，系统会立即回收掉匿名对象
+	//注意：不要利用拷贝函数初始化匿名对象-编译器会认为Person(p3) == Person p3 编译器会认为是对象的声明
+	//Person(p3)"></outline>
+								</outline>
+							</outline>
+							<outline text="隐式转换法">
+								<outline text="案例">
+									<outline text="Person p4 = 10;//相当与Person p4 = Person(10);
+Person p5 = p4;//拷贝构造"></outline>
+								</outline>
+							</outline>
+						</outline>
+						<outline text="构造函数的调用规则">
+							<outline text="默认情况下，C++编译器至少给一个类添加三个函数">
+								<outline text="默认构造函数(无参、函数体为空)"></outline>
+								<outline text="默认析构函数(无参、函数体为空)"></outline>
+								<outline text="默认拷贝函数构造函数，对属性值拷贝"></outline>
+							</outline>
+							<outline text="构造函数调用规则">
+								<outline text="如果用户定义有参构造函数，C++不再提供默认无参构造，但是会提供默认拷贝构造"></outline>
+								<outline text="如果用户定义拷贝构造函数，C++不会再提供其他构造函数"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+//构造函数的调用规则
+//只要创建一个类，c++编译器会默认给每个类都添加至少3个函数
+/*默认构造(空实现)
+析构函数(空实现)
+拷贝函数*/
+class Person
+{
+public:
+	Person()
+	{
+		cout &lt;&lt; &quot;Person的默认构造函数调用&quot; &lt;&lt; endl;
+	}
+	Person(int age)
+	{
+		m_Age = age;
+		cout &lt;&lt; &quot;Person的有参构造函数调用&quot; &lt;&lt; endl;
+	}
+	Person(const Person&amp; p)
+	{
+		m_Age = p.m_Age;
+		cout &lt;&lt; &quot;Person的拷贝构造函数调用&quot; &lt;&lt; endl;
+	}
+	~Person()
+	{
+		cout &lt;&lt; &quot;Person的默认析构函数调用&quot; &lt;&lt; endl;
+	}
+	int m_Age;
+	
+};
+void test()
+{
+	Person p;
+	p.m_Age = 18;
+	Person p2(p);
+	cout &lt;&lt; &quot;p2的年龄为&quot; &lt;&lt; p2.m_Age &lt;&lt; endl;
+}
+//当用户创建了有参构造函数，编译器就不再提供默认无参构造函数，但是会提供默认拷贝构造函数
+void test02()
+{
+	
+}
+int main(void)
+{
+	test02();
+	system(&quot;pause&quot;);
+	return 0;
+
+}"></outline>
+							</outline>
+						</outline>
+					</outline>
+					<outline text="析构函数">
+						<outline text="作用">
+							<outline text="主要作用在于对象销毁前系统自动调用，执行一些清理工作。"></outline>
+						</outline>
+						<outline text="语法">
+							<outline text="~类名(){}"></outline>
+						</outline>
+						<outline text="写法">
+							<outline text="析构函数没有返回值也不写void"></outline>
+							<outline text="函数名称与类名相同，在名称前加上~"></outline>
+							<outline text="析构函数不可以有参数，因此不可以发生重载"></outline>
+							<outline text="程序在对象销毁前会自动调用析构，无须手动调用，而且只会调用一次"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Person
+{
+public:
+	Person()
+	{
+		cout &lt;&lt; &quot;构造函数的调用&quot; &lt;&lt; endl;
+	}
+	~Person()
+	{
+		cout &lt;&lt; &quot;析构函数的调用&quot; &lt;&lt; endl;
+	}
+	//构造和析构都是必须有的实现，如果我们自己不提供，编译器会提供一个空实现的构造和析构
+};
+void test01()
+{	
+	Person p;//在栈上的数据，test01执行完之后会释放这个对象
+}
+int main(void)
+{
+	test01();
+	//Person p;在main函数中析构函数也会被调用在按完任意键之后
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+					</outline>
+					<outline text="总结">
+						<outline text="用户提供了有参，编译器不会提供无参，但会提供拷贝；"></outline>
+						<outline text="用户提供了拷贝，编译器什么构造函数都不会提供。"></outline>
+					</outline>
+					<outline text="深拷贝与浅拷贝（重中之重）">
+						<outline text="浅拷贝">
+							<outline text="定义">
+								<outline text="简单的赋值拷贝操作。"></outline>
+							</outline>
+							<outline text="问题">
+								<outline text="内存重复释放。"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+//深拷贝与浅拷贝问题
+class Person
+{
+public:
+	Person()
+	{
+		cout &lt;&lt; &quot;Person的默认构造函数调用&quot; &lt;&lt; endl;
+	}
+	Person(int age,int height)
+	{
+		m_Height = new int(height);
+		m_Age = age;
+		cout &lt;&lt; &quot;Person的有参构造函数调用&quot; &lt;&lt; endl;
+	}
+    Person(const Person&amp; p)
+	{
+		cout &lt;&lt; &quot;Person的拷贝构造函数调用&quot; &lt;&lt; endl;
+		m_Age = p.m_Age;
+		m_Height = p.m_Height;编译器默认实现的就是这行代码
+		
+	}
+	~Person()
+	{
+		//将堆区开辟的数据进行释放
+		if (m_Height !=NULL)
+		{
+			delete m_Height;
+			m_Height = NULL;
+		}
+		cout &lt;&lt; &quot;Person的析构构造函数调用&quot; &lt;&lt; endl;
+	}
+ 
+	int m_Age;
+	int* m_Height;//为什么要用指针——要把身高开辟到堆区
+};
+void test()
+{
+	Person p1(18,166);
+	cout &lt;&lt; p1.m_Age&lt;&lt;&quot;\t&quot; &lt;&lt; *p1.m_Height &lt;&lt; endl;
+	Person p2(p1);
+	cout &lt;&lt; p2.m_Age&lt;&lt;&quot;\t&quot; &lt;&lt;*p2.m_Height&lt;&lt; endl;
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+
+}"></outline>
+							</outline>
+							<outline text="解决方案">
+								<outline text="浅拷贝的这个问题需要用深拷贝来解决"></outline>
+								<outline text="重新在堆区找一块内存来存放他。"></outline>
+								<outline text="自己实现拷贝构造函数来解决浅拷贝带来的问题"></outline>
+							</outline>
+						</outline>
+						<outline text="深拷贝">
+							<outline text="定义">
+								<outline text="在堆区中重新申请空间，进行拷贝操作。"></outline>
+							</outline>
+							<outline text="解决上述问题的具体方法">
+								<outline text="Person(const Person&amp; p)
+{
+	cout &lt;&lt; &quot;Person的拷贝构造函数调用&quot; &lt;&lt; endl;
+	m_Age = p.m_Age;
+	//m_Height = p.m_Height;编译器默认实现的就是这行代码
+	//深拷贝操作
+	m_Height = new int(*p.m_Height);
+}"></outline>
+							</outline>
+						</outline>
+						<outline text="总结">
+							<outline text="如果有属性在堆区开辟的，一定要自己提供拷贝构造函数，防止浅拷贝带来的问题。"></outline>
+						</outline>
+					</outline>
+					<outline text="初始化列表">
+						<outline text="作用">
+							<outline text="C++提供了初始化列表语法，用来初始化对象。"></outline>
+						</outline>
+						<outline text="语法">
+							<outline text="构造函数()：属性1（值1），属性2（值2）…{}"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Person
+{
+public:
+	//传统赋值操作
+	/*Person(int a, int b, int c)
+	{
+		m_A = a;
+		m_B = b;
+		m_C = c;
+	}*/
+	//初始化列表初始化属性
+	Person(int a,int b,int c) :m_A(a), m_B(b), m_C(c)
+	{
+
+	}
+	int m_A;
+	int m_B;
+	int m_C;
+};
+void test()
+{
+	//Person p(10,20,30);
+	Person p(30,20,10);
+	cout &lt;&lt; p.m_A &lt;&lt; endl;
+	cout &lt;&lt; p.m_B &lt;&lt; endl;
+	cout &lt;&lt; p.m_C &lt;&lt; endl;
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+
+}"></outline>
+						</outline>
+					</outline>
+					<outline text="类对象作为类成员">
+						<outline text="定义">
+							<outline text="C++中类的成员可以是另一个类的对象，我们称该成员为对象成员。"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="class A{}class B{    A a;}"></outline>
+							<outline text="B类中有对象A作为成员，A为对象成员。"></outline>
+						</outline>
+						<outline text="构造顺序">
+							<outline text="A先被构造"></outline>
+							<outline text="当其他类的对象作为本类的成员时，构造时先构造其他类的对象，再构造自身。"></outline>
+							<outline text="析构呢？与构造函数相反。"></outline>
+							<outline text="自身的析构函数先进行，之后其它类再进行。"></outline>
+						</outline>
+						<outline text="案例（可以自己试试跑）">
+							<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+class Phone
+{
+public:
+	Phone(string  p)
+	{
+		Phonename = p;
+		cout &lt;&lt; &quot;Phone的构造函数调用&quot; &lt;&lt; endl;
+	}
+	~Phone()
+	{
+		cout &lt;&lt; &quot;Phone的析构函数调用&quot; &lt;&lt; endl;
+	}
+	string Phonename;
+};
+
+class Person
+{
+public:
+	//Phone Personphone = pname 隐式转换法
+	Person(string name, string pname):Personname(name), Personphone(pname)
+	{
+		cout &lt;&lt; &quot;Person的构造函数调用&quot; &lt;&lt; endl;
+	}
+	~Person()
+	{
+		cout &lt;&lt; &quot;Person的析构函数调用&quot; &lt;&lt; endl;
+	}
+	string Personname;
+	Phone Personphone;
+};
+void test()
+{
+	Person p(&quot;张三&quot;, &quot;华为&quot;); 
+	cout &lt;&lt; p.Personname&lt;&lt; endl;
+	cout &lt;&lt; p.Personphone.Phonename&lt;&lt; endl;
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+
+}"></outline>
+						</outline>
+					</outline>
+					<outline text="静态成员">
+						<outline text="定义">
+							<outline text="静态成员就是在成员变量和成员函数前面加上关键字啊static，称为静态成员。"></outline>
+						</outline>
+						<outline text="分类">
+							<outline text="变量">
+								<outline text="所有对象共享同一份数据"></outline>
+								<outline text="在编译阶段分配内存"></outline>
+								<outline text="类内声明，类外初始化"></outline>
+							</outline>
+							<outline text="函数">
+								<outline text="所有成员共享同一个函数"></outline>
+								<outline text="静态成员函数只能访问静态成员变量"></outline>
+							</outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="C++对象模型和this指针">
+					<outline text="C++对象模型">
+						<outline text="成员变量和成员函数分开存储"></outline>
+						<outline text="在C++中，类内的成员变量和成员函数分开存储，"></outline>
+						<outline text="只有非静态成员变量才属于类的对象上。"></outline>
+						<outline text="（只有非静态成员变量的大小算进类的大小中，其他的都不算。）"></outline>
+						<outline text="空对象的大小是1，为的是区分不同类在内存中的占用位置。"></outline>
+					</outline>
+					<outline text="this指针">
+						<outline text="概念">
+							<outline text="通过上一个知识点《成员变量和成员函数是分开存储的》我们知道C++中成员变量和成员函数是分开存储的。"></outline>
+							<outline text="每一个非静态成员函数只会诞生一份函数实例，也就是说多个同类型的对象会公用一块代码。"></outline>
+							<outline text="那么问题是：这一块代码是如何区分是哪个对象调用自己的呢？"></outline>
+							<outline text="C++通过提供特殊的对象指针，this指针，解决上述问题。"></outline>
+							<outline text="this指针指向被调用的成员函数所属的对象。"></outline>
+							<outline text="(谁调的，this就指向谁)"></outline>
+							<outline text="this指针是隐含每个非静态成员函数内的一种指针。"></outline>
+							<outline text="this指针不需要定义，直接使用即可。"></outline>
+						</outline>
+						<outline text="用途">
+							<outline text="当形参和成员变量同名时，可用this指针来区分"></outline>
+							<outline text="在类的非静态成员函数中返回对象本身，可使用return *this"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="解决名称冲突，返回对象本身用*this">
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Person
+{
+public:
+	Person(int age)
+	{
+		//this指针指向的是被调函数的成员函数所属的对象
+		//这里指向的就是p
+		this-&gt;age = age;
+	}
+	//返回本体要用应用的方式进行返回
+	//这里返回值如果是Person，就创建了一个新的对象
+	Person&amp; PersonAddPerson(Person &amp;p)
+	{
+		this-&gt;age += p.age;
+		return *this;
+	}
+	int age;//注意起名规范也可以解决名字冲突的问题
+};
+//解决对象冲突
+void test()
+{
+	Person p(18);
+	cout &lt;&lt; p.age &lt;&lt; endl;
+}
+//返回对象本身用*this
+void test01()
+{
+	Person p1(10);
+	Person p2(10);
+	p2.PersonAddPerson(p1);//将p1和p2的加在一起
+	//多次追加,return *this;
+	//链式编程思想
+	p2.PersonAddPerson(p1).PersonAddPerson(p1);
+	cout &lt;&lt; p2.age &lt;&lt; endl;
+}
+int main(void)
+{
+	test01();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+					</outline>
+					<outline text="const修饰成员函数">
+						<outline text="常函数">
+							<outline text="成员函数后加const后我们称这个函数为常函数"></outline>
+							<outline text="常函数不可以修改成员属性"></outline>
+							<outline text="成员属性声明时加关键字mutable后，在常函数中依然可以修改"></outline>
+						</outline>
+						<outline text="常对象">
+							<outline text="声明对象前const称该对象为常对象。"></outline>
+							<outline text="常对象只能调用常函数。"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+//常函数
+class Person
+{
+public:
+	//this指针的本质是指针常量，指针的指向是不可以修改的
+	//就相当于Person *const this;
+	//在成员函数后面加const修饰的是this指向，让指针指向的值也不可以修改
+	void showPerson() const//加个const就不允许修改了
+	{
+		this-&gt;m_b = 100;
+		//this = NULL;tbhis指针是不可以修改指针的指向的
+	}
+	int m_a;
+	mutable int m_b;//加了mutable修饰的特殊变量，即使在常函数,常对象中，也可以修改这个值
+
+	void func()
+	{
+		m_a = 100;//在普通成员函数中是可以修改的
+	}
+};
+void test()
+{
+	Person P;
+	P.showPerson();
+}
+//常对象
+void test1()
+{
+	const Person p;//在对象前加const，变为常对象
+	//p.m_a = 100;
+	p.m_b = 100;
+	//常对象只能调用常函数 
+	p.showPerson();
+	//p.func();常对象不能调用普通成员函数，因为普通成员函数可以修改属性。
+	
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="友元">
+					<outline text="概念">
+						<outline text="客厅就是Public，你的卧室就是Private"></outline>
+						<outline text="客厅所有人都可以进去，但是你的卧室只有和你亲密的人可以进。"></outline>
+						<outline text="在程序中，有些私有属性也想让类外特殊的一些函数或者类进行访问，就需要用到友元技术。"></outline>
+						<outline text="友元的目的就是让一个函数或者类 访问另一个类中的私有元素。"></outline>
+					</outline>
+					<outline text="关键字">
+						<outline text="friend"></outline>
+					</outline>
+					<outline text="实现方式">
+						<outline text="全局函数做友元">
+							<outline text="就是将此函数在类的最上面写一个声明，前面加一个friend。">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+class Building 
+{
+	//goodgay全局函数是Building类的一个好朋友，可以访问你家的卧室(私有成员)
+	friend void goodgay(Building* building);
+public:
+	Building()
+	{
+		m_SittingRoom = &quot;客厅&quot;;
+		m_BedRoom = &quot;卧室&quot;;
+	}
+public:
+	string m_SittingRoom;
+private:
+	string m_BedRoom;
+};
+
+//全局函数
+void goodgay(Building* building)
+{
+	cout &lt;&lt; &quot;好基友全局函数正在访问你的&quot; &lt;&lt; building-&gt;m_SittingRoom &lt;&lt; endl;
+	
+	cout &lt;&lt; &quot;好基友全局函数正在访问你的&quot; &lt;&lt; building-&gt;m_BedRoom &lt;&lt; endl;
+}
+void test()
+{
+	Building building;
+	goodgay(&amp;building);
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+						<outline text="类做友元">
+							<outline text="一个类在另一个中friend class xx。">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+//在前面先声明一下
+class Building;
+
+class GoodGay
+{
+public:
+	GoodGay();
+public:
+	void visit();//参观函数 访问Building中的属性
+	Building* building;
+};
+
+
+class Building
+{
+	//GoodGay是Building类的好朋友，可以访问其私有属性
+	friend class GoodGay;
+public:
+	Building();
+public:
+	string m_SittingRoom;
+private:
+	string m_BedRoom;
+};
+//在类外写成员函数
+Building::Building()
+{
+	m_SittingRoom = &quot;客厅&quot;;
+	m_BedRoom = &quot;卧室&quot;;
+}
+GoodGay::GoodGay()
+{
+	//创建一个Building对象
+	building = new Building;
+}
+void GoodGay::visit()
+{
+	cout &lt;&lt; &quot;好基友正在访问你的&quot; &lt;&lt; building-&gt;m_SittingRoom &lt;&lt; endl;
+	cout &lt;&lt; &quot;好基友正在访问你的&quot; &lt;&lt; building-&gt;m_BedRoom &lt;&lt; endl;
+}
+
+void test()
+{
+	GoodGay gy;
+	gy.visit();
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+						<outline text="成员函数做友元">
+							<outline text="告诉编译器 另一个类中的xx成员函数作为本类的好朋友，可以访问私有函数。">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+
+class Building;
+class GoodGay
+{
+public:
+	GoodGay();
+	void visit();//可以访问Building中私有成员
+	void visit1();//不可以访问Building中私有成员
+	Building* builidng;	
+};
+class Building
+{
+	//告诉编译器 GoodGay类中的visit成员函数作为本类的好朋友，可以访问私有函数
+	friend void GoodGay::visit();
+public:
+	Building(); 
+public:
+	string m_SittingRoom;
+private:
+	string m_BedRoom;
+};
+
+Building::Building()
+{
+	m_SittingRoom = &quot;客厅&quot;;
+	m_BedRoom = &quot;卧室&quot;;
+}
+
+GoodGay::GoodGay()
+{
+
+	builidng = new Building;
+}
+void GoodGay::visit()
+{
+	cout &lt;&lt; &quot;visit正在访问&quot; &lt;&lt; builidng-&gt;m_SittingRoom &lt;&lt; endl;
+	cout &lt;&lt; &quot;visit正在访问&quot; &lt;&lt; builidng-&gt;m_BedRoom &lt;&lt; endl;
+}
+void GoodGay::visit1()
+{
+	cout &lt;&lt; &quot;visit1正在访问&quot; &lt;&lt; builidng-&gt;m_SittingRoom &lt;&lt; endl;
+
+}
+void test()
+{
+	GoodGay gg;
+	gg.visit();
+	gg.visit1();
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="运算符重载">
+					<outline text="概念">
+						<outline text=":对已有的运算符重新进行定义，赋予其另一种功能，以适应不同的数据类型"></outline>
+					</outline>
+					<outline text="分类">
+						<outline text="加号运算符重载">
+							<outline text="作用">
+								<outline text="实现两个自定义数据类型相加的运算。"></outline>
+							</outline>
+							<outline text="例如：两个整型相加编译器知道该怎么进行运算，如果是两个自定义出来的类型，两个Person想加，编译器就不知道该怎么运算了。"></outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+//加号运算符重载
+
+class Person
+{
+public:
+	//1.成员函数重载+
+	/*Person operator+(Person&amp; p)
+	{
+		Person temp;
+		temp.m_A = this-&gt;m_A + p.m_A;
+		temp.m_B = this-&gt;m_B + p.m_B;
+		return temp;
+	}*/
+	int m_A;
+	int m_B;
+};
+
+
+//2.全局函数重载+
+Person operator+(Person&amp; p1, Person&amp; p2)
+{
+	Person temp;
+	temp.m_A = p1.m_A + p2.m_A;
+	temp.m_B = p1.m_B + p2.m_B;
+	return temp;
+}
+//函数函数重载版本
+Person operator+(Person&amp; p1, int num)
+{
+	Person temp;
+	temp.m_A = p1.m_A + num;
+	temp.m_B = p1.m_B + num;
+	return temp;
+}
+void test01()
+{
+	Person p1;
+	p1.m_A = 10;
+	p1.m_B = 10;
+	Person p2;
+	p2.m_A = 10;
+	p2.m_B = 10;
+	//成员函数重载本质调用
+	//Person p3 = p1.operator+(p2);
+	//Person p3 = p1 + p2;//可以简化成这种形式
+	//全局函数重载的本质调用
+	//Person p3 = operator+(p1,p2);
+	/*cout &lt;&lt; p3.m_A &lt;&lt; endl;
+	cout &lt;&lt; p3.m_B &lt;&lt; endl;*/
+	//运算符重载也可以发生函数重载
+	Person p3 = p1 + 10;
+	cout &lt;&lt; p3.m_A &lt;&lt; endl;
+	cout &lt;&lt; p3.m_B &lt;&lt; endl;
+}
+int main(void)
+{
+{
+	test01();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+							<outline text="总结">
+								<outline text="对于内置的数据类型的表达式的运算符是不可能改变的"></outline>
+								<outline text="不要滥用运算符重载"></outline>
+							</outline>
+						</outline>
+						<outline text="左移运算符重载（&lt;）">
+							<outline text="作用">
+								<outline text="可以输出自定义的类型"></outline>
+								<outline text="在C++中&lt;&lt;一般用在cout中，但是类不属于可以输出的类型，所以本来在cout中的&lt;&lt;后面一般是不能直接加类这个整体的，但是我们在重载后可以做到"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Person
+{
+	friend ostream&amp; operator&lt;&lt;(ostream&amp; cout, Person&amp; p);
+public:
+	Person(int a, int b)
+	{
+		m_A = a;
+		m_B = b;
+	}
+	//利用成员函数重载左移运算符p.operator&lt;&lt;(cout)简化版本p&lt;&lt;cout
+	//一般我们不会利用成员函数来重载&lt;&lt;运算符，以为无法实现cout在左边
+	/*void operator&lt;&lt;(ostream &amp;cout,Person &amp;p)
+	{
+		cout &lt;&lt; p.m_A &lt;&lt; endl;
+		cout &lt;&lt; p.m_B &lt;&lt; endl;
+	}*/
+private:
+	int m_A;
+	int m_B;
+};
+//只能利用全局函数来重载左移运算符
+ostream&amp; operator&lt;&lt;(ostream &amp;cout, Person &amp;p) //这样写的本质就是operator&lt;&lt;(cout,p)简化版本就是cout&lt;&lt;p; 
+{
+	cout &lt;&lt; p.m_A &lt;&lt; endl;
+	cout &lt;&lt; p.m_B &lt;&lt; endl;
+	return cout;
+}
+void test()
+{
+	Person p(10,10);
+	cout &lt;&lt; p &lt;&lt; &quot;hello world&quot; &lt;&lt; endl;
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+							<outline text="总结">
+								<outline text="重载左移运算符配合友元可以实现输出自定义数据类型。"></outline>
+							</outline>
+							<outline text="另一种实现方式">
+								<outline text="void operator&lt;&lt;(ostream &amp;cout)
+	{
+		cout &lt;&lt; this-&gt;m_A;
+		cout &lt;&lt; this-&gt;m_B;
+	}
+
+//使用
+p&lt;&lt;cout;"></outline>
+							</outline>
+						</outline>
+						<outline text="递增运算符重载（++）">
+							<outline text="作用">
+								<outline text="通过重载递增运算符，实现自己的整型数据。"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+//重载递增运算符
+class MyInteger
+{
+	friend ostream&amp; operator&lt;&lt;(ostream&amp; cout, MyInteger myint);
+public:
+	MyInteger()
+	{
+		m_Num = 0;
+	}
+	//重载++运算符——前置
+	//返回引用是为了一直对一个数据进行递增操作
+	MyInteger&amp; operator++()
+	{
+		++m_Num;
+		return *this;
+	}
+	//重载++运算符——后置
+	MyInteger operator++(int)//这个int在这里作为占位参数，用来区分前置递增和后置递增
+	{
+		MyInteger temp = *this;
+		m_Num++;
+		return temp;
+		//后置递增要返回值，因为如果返回引用，这里相当于返回的是一个局部对象的引用。
+		//局部对象在当前函数执行完毕之后就被释放掉了，还要返回引用就是非法操作。
+	}
+private:
+	int m_Num;
+};
+//全局函数重载左移运算符
+ostream&amp; operator&lt;&lt;(ostream&amp; cout, MyInteger myint)
+{
+	cout &lt;&lt; myint.m_Num &lt;&lt; endl;
+	return cout;
+ }
+void test()
+{
+	MyInteger myint;
+	cout &lt;&lt; ++(++myint);
+	cout &lt;&lt;myint;
+}
+void test02()
+{
+	MyInteger myint;
+	cout &lt;&lt; myint++ &lt;&lt; endl;
+	cout &lt;&lt; myint &lt;&lt; endl;
+}
+int main(void)
+{
+	//test();
+	test02();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+							<outline text="总结">
+								<outline text="前置递增返回引用，后置递增返回值。"></outline>
+							</outline>
+						</outline>
+						<outline text="赋值运算符重载（=）">
+							<outline text="作用">
+								<outline text="如果我们想重定义赋值符号，例如Class A=Class B不是整个B复制到A中，而是只有B中的学号复制到A中，这时候就需要重定义赋值运算符"></outline>
+							</outline>
+							<outline text="C++编译器至少给一个类添加4个函数(前三个之前已经讲过了)">
+								<outline text="默认构造函数(无参，函数体为空)"></outline>
+								<outline text="默认析构函数(无参，函数体为空)"></outline>
+								<outline text="默认拷贝构造函数，对属性进行值拷贝"></outline>
+								<outline text="赋值运算符operator=，对属性进行值拷贝"></outline>
+							</outline>
+							<outline text="如果类中有属性指向堆区，做赋值操作时也会出现深浅拷贝问题。"></outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Person
+{
+public:
+	Person(int age)
+	{
+		m_Age = new int(age);
+	}
+	~Person()
+	{
+		if (m_Age != NULL)
+		{
+			delete m_Age;
+			m_Age = NULL;
+		}
+	}
+	//重载赋值运算符
+	Person&amp; operator=(Person &amp;p)
+	{
+		//编译器默认提供的是浅拷贝操作
+		//m_Age = p.m_Age;
+		//应该先判断是否有属性在堆区，如果有先释放干净，然后再深拷贝。
+		if (m_Age != NULL)
+		{
+			delete m_Age;
+			m_Age = NULL;
+		}
+		//深拷贝操作
+		m_Age = new int(*p.m_Age);
+		return *this;
+	}
+	int *m_Age;
+};
+void test1()
+{
+	Person p1(18);
+	Person p2(20);
+	Person p3(30);
+	p3 = p2 = p1;
+	cout &lt;&lt; *(p1.m_Age) &lt;&lt; endl;
+	cout &lt;&lt; *(p2.m_Age) &lt;&lt; endl;
+	cout &lt;&lt; *(p3.m_Age) &lt;&lt; endl;
+}
+int main(void)
+{
+	test1();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+						<outline text="关系运算符重载">
+							<outline text="作用">
+								<outline text="重载关系运算符，可以让两个自定义类型对象进行对比操作"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+class Person
+{
+public:
+	//重载==
+	bool operator==(Person &amp;p)
+	{
+		if (this-&gt;m_Name == p.m_Name &amp;&amp; this-&gt;m_Age == p.m_Age)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool operator!=(Person &amp;p)
+	{
+		if (this-&gt;m_Name == p.m_Name &amp;&amp; this-&gt;m_Age == p.m_Age)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	Person(string name, int age)
+	{
+		m_Name = name;
+		m_Age = age;
+	}
+	string m_Name;
+	int m_Age;
+};
+void test()
+{
+	Person p1(&quot;张三&quot;, 20);
+	Person p2(&quot;张三&quot;, 20);
+	if (p1 == p2)
+	{
+		cout &lt;&lt; &quot;p1和p2是相等的&quot; &lt;&lt; endl;
+	}
+	else
+	{
+		cout &lt;&lt; &quot;p1和p2是不相等的&quot; &lt;&lt; endl;
+	}
+	if (p1 != p2)
+	{
+		cout &lt;&lt; &quot;p1和p2是不相等的&quot; &lt;&lt; endl;
+	}
+	else
+	{
+		cout &lt;&lt; &quot;p1和p2是相等的&quot; &lt;&lt; endl;
+	}
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="继承">
+					<outline text="引入">
+						<outline text="我们知道猫和老虎都属于猫科动物，狗和猫都属于动物，他们都有一部分相同的属性例如年龄，大小，体重，名字等，但是他们属于不同的类。所以当我们写这些类的时候就要重复编写这些属性或是方法，这时候会大大影响代码编写的效率，所以我们引入了继承，当遇到这种情况我们不需要重复编写代码"></outline>
+						<outline text=""></outline>
+					</outline>
+					<outline text="基本语法">
+						<outline text="例子">
+							<outline text="例如我们看到很多网站中，都有公共的头部，公共的底部，甚至公共的左侧列表，只有中心内容不同。"></outline>
+							<outline text="接下里我们分别利用普通写法和继承写法来实现网页中的内容，看一下继承存在的意义以及好处。"></outline>
+						</outline>
+						<outline text="对比">
+							<outline text="不使用继承的方法">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+
+//普通实现页面
+
+//java页面
+class Java
+{
+public:
+	void header()
+	{
+		cout &lt;&lt; &quot;首页、登录注册&quot; &lt;&lt; endl;
+	}
+	void footer()
+	{
+		cout &lt;&lt; &quot;帮助中心、交流合作&quot; &lt;&lt; endl;
+	}
+	void left()
+	{
+		cout &lt;&lt; &quot;java、python、c++&quot; &lt;&lt; endl;
+
+	}
+	void contenet()
+	{
+		cout &lt;&lt; &quot;java学科视频&quot; &lt;&lt; endl;
+	}
+};
+class Python
+{
+public:
+	void header()
+	{
+		cout &lt;&lt; &quot;首页、登录注册&quot; &lt;&lt; endl;
+	}
+	void footer()
+	{
+		cout &lt;&lt; &quot;帮助中心、交流合作&quot; &lt;&lt; endl;
+	}
+	void left()
+	{
+		cout &lt;&lt; &quot;java、python、c++&quot; &lt;&lt; endl;
+
+	}
+	void contenet()
+	{
+		cout &lt;&lt; &quot;python学科视频&quot; &lt;&lt; endl;
+	}
+};
+class Cpp
+{
+public:
+	void header()
+	{
+		cout &lt;&lt; &quot;首页、登录注册&quot; &lt;&lt; endl;
+	}
+	void footer()
+	{
+		cout &lt;&lt; &quot;帮助中心、交流合作&quot; &lt;&lt; endl;
+	}
+	void left()
+	{
+		cout &lt;&lt; &quot;java、python、c++&quot; &lt;&lt; endl;
+
+	}
+	void contenet()
+	{
+		cout &lt;&lt; &quot;c++学科视频&quot; &lt;&lt; endl;
+	}
+};
+void test()
+{
+	cout &lt;&lt; &quot;java&quot; &lt;&lt; endl;
+	Java java;
+	java.header();
+	java.footer();
+	java.left();
+	java.contenet();
+
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;python&quot; &lt;&lt; endl;
+	Python python;
+	python.header();
+	python.footer();
+	python.left();
+	python.contenet();
+
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;cpp&quot; &lt;&lt; endl;
+	Cpp cpp;
+	cpp.header();
+	cpp.footer();
+	cpp.left();
+	cpp.contenet();
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+							<outline text="使用继承的方法">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+
+//公共页面
+class BasePage
+{
+public:
+	void header()
+	{
+		cout &lt;&lt; &quot;首页、登录注册&quot; &lt;&lt; endl;
+	}
+	void footer()
+	{
+		cout &lt;&lt; &quot;帮助中心、交流合作&quot; &lt;&lt; endl;
+	}
+	void left()
+	{
+		cout &lt;&lt; &quot;java、python、c++&quot; &lt;&lt; endl;
+
+	}
+};
+//普通实现页面
+
+//java页面
+class Java : public BasePage
+{
+public:
+	void contenet()
+	{
+		cout &lt;&lt; &quot;java学科视频&quot; &lt;&lt; endl;
+	}
+};
+class Python : public BasePage
+{
+public:
+	void contenet()
+	{
+		cout &lt;&lt; &quot;python学科视频&quot; &lt;&lt; endl;
+	}
+};
+class Cpp : public BasePage
+{
+public:
+	
+	void contenet()
+	{
+		cout &lt;&lt; &quot;c++学科视频&quot; &lt;&lt; endl;
+	}
+};
+void test()
+{
+	cout &lt;&lt; &quot;java&quot; &lt;&lt; endl;
+	Java java;
+	java.header();
+	java.footer();
+	java.left();
+	java.contenet();
+
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;python&quot; &lt;&lt; endl;
+	Python python;
+	python.header();
+	python.footer();
+	python.left();
+	python.contenet();
+
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;cpp&quot; &lt;&lt; endl;
+	Cpp cpp;
+	cpp.header();
+	cpp.footer();
+	cpp.left();
+	cpp.contenet();
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+						</outline>
+					</outline>
+					<outline text="总结">
+						<outline text="继承的好处：减少重复代码"></outline>
+					</outline>
+					<outline text="语法">
+						<outline text="class 子类:继承方式 父类"></outline>
+					</outline>
+					<outline text="概念">
+						<outline text="子类也称派生类"></outline>
+						<outline text="父类也称基类"></outline>
+						<outline text="派生类中的成员，包含量大部分"></outline>
+						<outline text="一类是从基类继承过来的，一类是自己增加的成员。"></outline>
+						<outline text="从基类继承过来的表现其共性，而新增加的成员体现其个性。"></outline>
+					</outline>
+					<outline text="方式">
+						<outline text="公共继承">
+							<outline text="可以访问父类中的public和protected部分，且在子类中按原父类中的访问权限使用"></outline>
+						</outline>
+						<outline text="保护继承">
+							<outline text="可以访问public和protected部分，且在子类中都以protected访问权限使用"></outline>
+						</outline>
+						<outline text="私有继承">
+							<outline text="可以访问public和protected部分，且在子类中都以private访问权限使用"></outline>
+						</outline>
+						<outline text="可视化图片">
+							<outline text=""></outline>
+						</outline>
+					</outline>
+					<outline text="不同继承方式的案例">
+						<outline text="#include&lt;iostream&gt;
+using namespace std;
+
+//公共继承
+class Base1
+{
+public:
+	int m_A;
+protected:
+	int m_B;
+private:
+	int m_C;
+};
+
+class Son1 :public Base1
+{
+public:
+	void func()
+	{
+		m_A = 10;//父类中的公共权限成员，到了子类中依然是公共权限
+		m_B = 20;//父类中的保护权限成员，到了子类中依然是保护权限
+		//m_C = 10;父类中的隐私权限成员，子类访问不到
+	}
+};
+void test01()
+{
+	Son1 son1;
+	son1.m_A = 100;
+	//son1.m_B = 100;保护权限的内容到了类外就无法访问了
+};
+//保护继承
+class Base2
+{
+public:
+	int m_A;
+protected:
+	int m_B;
+private:
+	int m_C;
+};
+class Son2 :protected Base2
+{
+	void func()
+	{
+		m_A = 100;//父类中公共权限的成员，因为是保护继承，到子类中变为保护权限
+		m_B = 100;//父类中保护权限的成员，保护继承后到了子类还是保护权限。
+		//m_C = 100;父类中的私有成员子类访问不到
+	}
+};
+void test02()
+{
+	Son2 son2;
+	//保护权限类外访问不到，所以在son2中m_A也访问不到了
+}
+//私有继承
+class Base3
+{
+public:
+	int m_A;
+protected:
+	int m_B;
+private:
+	int m_C;
+};
+class Son3:private Base3
+{
+	void func()
+	{
+		m_A = 100;//父类中公共成员，私有继承后，到了子类变为私有成员
+		m_B = 100;//父类中保护成员，私有继承后，到了子类变为私有成员
+		//m_C = 100;父类的私有权限成员仍然访问不到
+	}
+};
+void test03()
+{
+	Son3 son3;
+	//私有成员类外访问不到
+}
+//验证Son3私有继承后成员是否变成了私有属性
+class GrandSon3 :public Son3
+{
+	void func()
+	{
+		//访问不到父类的私有成员
+		//到了Son3中m_A,m_B,m_C全是私有成员，子类无法访问
+	}
+};
+int main(void)
+{
+
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+					</outline>
+					<outline text="继承中的对象模型">
+						<outline text="问题">
+							<outline text="从父类继承过来的对象，哪些属于子类对象？"></outline>
+						</outline>
+						<outline text="解答">
+							<outline text="父类中所有的非静态成员属性都会被子类继承下去。"></outline>
+							<outline text="父类中私有的成员属性是被编译器给隐藏了，因此访问不到，但是确实被继承下去了"></outline>
+						</outline>
+					</outline>
+					<outline text="继承中构造和析构的顺序">
+						<outline text="前言">
+							<outline text="子类继承父类后，当创建子类时，也会调用父类的构造函数。"></outline>
+						</outline>
+						<outline text="问题">
+							<outline text="父类和子类的构造函数和析构顺序怎么样的呢？"></outline>
+						</outline>
+						<outline text="解答">
+							<outline text="先构造父类，再构造子类"></outline>
+							<outline text="先析构子类，再析构父类"></outline>
+							<outline text="创建子类对象的同时也会创建一个父类对象。"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Base
+{
+public:
+	Base()
+	{
+		cout &lt;&lt; &quot;父类的构造函数&quot; &lt;&lt; endl;
+	}
+	~Base()
+	{
+		cout &lt;&lt; &quot;父类的析构函数&quot; &lt;&lt; endl;
+	}
+};
+class Son:public Base 
+{
+public:
+	Son()
+	{
+		cout &lt;&lt; &quot;子类的构造函数&quot; &lt;&lt; endl;
+	}
+	~Son()
+	{
+		cout &lt;&lt; &quot;子类的析构函数&quot; &lt;&lt; endl;
+	}
+};
+void test01()
+{
+	Son son;
+}
+int main(void)
+{
+	test01();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+						<outline text="总结">
+							<outline text="继承中先调用父类构造函数，再调用子类构造函数，析构顺序与构造相反。"></outline>
+						</outline>
+					</outline>
+					<outline text="继承同名成员处理方式">
+						<outline text="问题">
+							<outline text="当子类与父类出现同名的成员。如何通过子类对象，访问到子类或父类中同名的数据呢?"></outline>
+						</outline>
+						<outline text="解答">
+							<outline text="访问子类同名成员，直接访问即可"></outline>
+							<outline text="访问父类同名成员，需要加作用域"></outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Base
+{
+public:
+	Base()
+	{
+		m_A = 100;
+	}
+	void func()
+	{
+		cout &lt;&lt; &quot;父类同名成员函数调用&quot; &lt;&lt; endl;
+	}
+	void func(int a)
+	{
+		cout &lt;&lt; &quot;父类同名重载成员函数调用&quot; &lt;&lt; endl;
+	}
+	int m_A;
+};
+class Son:public Base 
+{
+public:
+	Son()
+	{
+		m_A = 200;
+	}
+	void func()
+	{
+		cout &lt;&lt; &quot;子类同名成员函数调用&quot; &lt;&lt; endl;
+	}
+	int m_A;
+};
+//同名成员属性处理方式
+void test01()
+{
+	Son son;
+	cout &lt;&lt;son.m_A&lt;&lt; endl;
+	//如果要通过子类对象访问到父类中的同名成员，需要加作用域。
+	cout &lt;&lt;son.Base::m_A&lt;&lt; endl;
+}
+//同名成员函数处理方式
+void test02()
+{
+	Son son1; 
+	son1.func();//子
+	son1.Base::func();//父
+	//如果子类中出现和父类同名的成员函数
+	//子类的同名成员会隐藏掉父类中所有同名成员函数
+	//如果想要访问到父类中被隐藏的同名成员函数，需要加作用域
+	son1.Base::func(10);
+}
+int main(void)
+{
+	test02();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+						<outline text="总结">
+							<outline text="子类对象可以直接访问到子类中同名成员"></outline>
+							<outline text="子类对象加作用域可以访问到父类同名成员"></outline>
+							<outline text="当子类与父类拥有同名的成员函数，子类会隐藏父类中同名成员函数，加作用域可以访问到父类同名函数。"></outline>
+						</outline>
+					</outline>
+					<outline text="多继承语法">
+						<outline text="C++允许一个类继承多个类"></outline>
+						<outline text="语法">
+							<outline text="class 子类:继承方式 父类1，继承方式 父类2"></outline>
+						</outline>
+					</outline>
+					<outline text="菱形继承">
+						<outline text="概念">
+							<outline text="两个派生类继承同一个基类，又有某个类同时继承这两个派生类，这种继承称为菱形继承，或者钻石继承。"></outline>
+						</outline>
+						<outline text="典型案例">
+							<outline text=""></outline>
+							<outline text="羊继承了动物的数据，驼同样继承了动物的数据，当草泥马使用数据时，就会产生二义性。"></outline>
+							<outline text="草泥马继承动物的数据继承了两份，其实我们应该清楚，这份数据我们只需要一份就可以。"></outline>
+						</outline>
+						<outline text="处理方法案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Animal
+{
+public:
+	int m_Age;
+};
+//利用虚继承可以解决菱形继承问题
+//在继承之前加上关键字virtual变为虚继承
+// Animal类称为虚基类
+//羊
+class Sheep:virtual public Animal
+{
+		
+};
+//驼
+class Tuo:virtual public Animal
+{
+
+};
+//羊驼
+class SheepTuo :public Sheep,public Tuo
+{
+
+};
+void test01()
+{
+	SheepTuo st;
+	st.Sheep::m_Age = 18;
+	st.Tuo::m_Age = 28;
+	//当菱形继承，当两个父类拥有相同的数据，需要加作用域来区分
+	cout &lt;&lt; st.Sheep::m_Age &lt;&lt; endl;
+	cout &lt;&lt; st.Tuo::m_Age &lt;&lt; endl;
+	cout &lt;&lt; st.m_Age &lt;&lt; endl;
+	//这份数据我们知道，只有一份就可以了，菱形继承导致数据有两份，资源浪费
+}
+int main(void)
+{
+	test01();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+						<outline text="总结">
+							<outline text="菱形继承带来的主要问题是子类继承两份相同的数据，导致资源浪费以及毫无意义。"></outline>
+							<outline text="利用虚继承可以解决菱形继承问题——virtual"></outline>
+						</outline>
+					</outline>
+				</outline>
+				<outline text="多态">
+					<outline text="分类">
+						<outline text="静态多态:函数重载和运算符重载属于静态多态，复用函数名"></outline>
+						<outline text="动态多态:派生类和虚函数实现运行时多态"></outline>
+					</outline>
+					<outline text="区别">
+						<outline text="静态多态的函数地址早绑定 - 编译阶段确定函数地址"></outline>
+						<outline text="动态多态的函数地址晚绑定 - 运行阶段确定函数地址"></outline>
+					</outline>
+					<outline text="案例">
+						<outline text="#include&lt;iostream&gt;
+using namespace std;
+class Animal
+{
+public:
+	//加上virtual变成虚函数,实现地址晚绑定
+	virtual void speak()
+	{
+		cout &lt;&lt; &quot;动物在说话&quot;&lt;&lt; endl;
+	}
+};
+
+class Cat :public Animal
+{
+public:
+	void speak()
+	{
+		cout &lt;&lt; &quot;小猫在说话&quot; &lt;&lt; endl;
+	}
+};
+
+class Dog : public Animal
+{
+public:
+	void speak()
+	{
+		cout &lt;&lt; &quot;小狗在说话&quot; &lt;&lt; endl;
+	}
+};
+//执行说话的函数
+//地址早绑定，在编译阶段就确定函数地址
+//如果想让猫说话，那么这个函数的地址就不能提前绑定，需要在运行阶段进行绑定
+
+//动态多条满足条件
+/*
+1.有继承关系
+2.子类重写父类的虚函数
+*/
+//重写要求:函数返回值类型 函数名 参数列表 完全相同 
+//动态多态的使用
+/*
+父类的指针或者引用 指向子类的对象//Animal &amp;animal = cat;
+*/
+
+void doSpeak(Animal &amp;animal)//Animal &amp;animal = cat;
+{
+	animal.speak();
+}
+void test01()
+{
+	Cat cat;
+	doSpeak(cat);
+	Dog dog;
+	doSpeak(dog);
+}
+int main(void)
+{
+	test01();
+	system(&quot;pause&quot;);
+	return 0;
+}
+"></outline>
+					</outline>
+					<outline text="总结">
+						<outline text="多态满足条件">
+							<outline text="有继承关关系"></outline>
+							<outline text="子类重写父类中的虚函数"></outline>
+						</outline>
+						<outline text="多态的使用条件">
+							<outline text="父类指针或引用指向子类对象"></outline>
+						</outline>
+						<outline text="重写:函数返回值类型 函数名 参数列表 完全一致称为重写"></outline>
+					</outline>
+					<outline text="纯虚函数和抽象类">
+						<outline text="在多态中，通常父类汇中虚函数的实现是毫无意义的，主要都是调用子类重写的内容。因此可以将虚函数改为纯虚函数。"></outline>
+						<outline text="纯虚函数">
+							<outline text="定义">
+								<outline text="不能实例化对象，可以做指针和引用"></outline>
+							</outline>
+							<outline text="作用">
+								<outline text="在基类中为其派生类保留一个函数的名字，以便派生类根据需要对他进行定义。如果在基类中没有保留函数名字，则无法实现多态性。"></outline>
+							</outline>
+							<outline text="声明格式（语法）">
+								<outline text="virtual  类型  函数名(参数列表）= 0"></outline>
+							</outline>
+							<outline text="注意">
+								<outline text="（1）纯虚函数没有函数体；"></outline>
+								<outline text="（2）最后面的“=0”并不表示函数返回值为0，它只起形式上的作用，告诉编译系统“这是虚函数”；"></outline>
+								<outline text="（3）这是一个声明语句，最后有分号。"></outline>
+							</outline>
+							<outline text="定义案例">
+								<outline text="virtual void bark() = 0;  //声明为纯虚函数"></outline>
+							</outline>
+						</outline>
+						<outline text="抽象类">
+							<outline text="定义">
+								<outline text="拥有纯虚函数的类是抽象类。"></outline>
+							</outline>
+							<outline text="特点">
+								<outline text="无法实例化对象"></outline>
+								<outline text="子类必须重写抽象类中的纯虚函数，否则也属于抽象类"></outline>
+							</outline>
+						</outline>
+						<outline text="案例">
+							<outline text="#include&lt;iostream&gt;
+using namespace std;
+//纯虚函数和抽象类
+class Base
+{
+public:
+	//只要有一个纯虚函数,这个类称为抽象类
+	//特点;无法实例化对象
+	virtual void func() = 0;//注意:不要忘掉virtual!
+	//抽象类的子类必须要重写父类中的纯虚函数，否则也属于抽象类
+};
+class Son :public Base
+{
+public:
+	void func()
+	{
+		cout &lt;&lt; &quot;func函数调用&quot; &lt;&lt; endl;
+	}
+};
+void test()
+{
+	//Base b1; 抽象类无法实例化对象
+	Son s1;//子类重写父类的虚函数，否则无法实例化对象
+	Base* abc = new Son;
+	abc-&gt;func();
+}
+int main(void)
+{
+	test();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+						</outline>
+						<outline text="虚析构和纯虚析构">
+							<outline text="引入">
+								<outline text="多态使用的时候，如果子类中有属性开辟到堆区，那么父类指针在释放的时无法调用到子类的析构代码"></outline>
+							</outline>
+							<outline text="解决方法">
+								<outline text="将父类中的析构函数改为虚析构或者纯虚析构"></outline>
+							</outline>
+							<outline text="虚析构和纯析构共性">
+								<outline text="可以解决父类指针释放子类对象，"></outline>
+								<outline text="都需要有具体的含函数实现"></outline>
+							</outline>
+							<outline text="虚析构和纯析构的区别">
+								<outline text="如果是纯虚析构，该类属于抽象类，无法实例化对象"></outline>
+							</outline>
+							<outline text="虚析构语法">
+								<outline text="virtual ~类名(){}"></outline>
+							</outline>
+							<outline text="纯虚析构语法">
+								<outline text="virtual ~类名() = 0;//声明"></outline>
+							</outline>
+							<outline text="案例">
+								<outline text="#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+//虚析构和纯虚析构
+class Animal
+{
+public:
+	Animal()
+	{
+		cout &lt;&lt; &quot;Animal的构造函数调用&quot; &lt;&lt; endl;
+	}
+	//利用虚析构可以解决父类指针释放对象时不干净的问题
+	/*virtual ~Animal()
+	{
+		cout &lt;&lt; &quot;Animal的析构函数调用&quot; &lt;&lt; endl;
+	}*/
+	//纯虚析构,需要声明也需要实现
+	//有了纯虚析构之后，这个类也属于抽象类，无法实例化对象	
+	virtual ~Animal() = 0;
+	//纯虚函数，不需要实现
+	virtual void speak() = 0;
+};
+//纯虚析构函数
+Animal::~Animal()
+{
+	cout &lt;&lt; &quot;Animal纯析构函数调用&quot; &lt;&lt; endl;
+}
+class Cat :public Animal
+{
+public:
+	Cat(string name)
+	{
+		m_Name = new string(name);
+	}
+	virtual void speak()
+	{
+		cout &lt;&lt; &quot;Cat的构造函数调用&quot; &lt;&lt; endl;
+		cout &lt;&lt; *m_Name &lt;&lt; &quot;小猫在说话&quot; &lt;&lt; endl;
+	}
+	~Cat()
+	{
+		if (m_Name != NULL)
+		{
+			cout &lt;&lt; &quot;Cat的析构函数调用&quot; &lt;&lt; endl;
+			delete m_Name;
+			m_Name = NULL;
+		}
+	}
+	string* m_Name;
+};
+void test01()
+{
+	Animal* animal = new Cat(&quot;Tom&quot;);
+	animal-&gt;speak();
+	/*
+	父类的指针在析构的时候，不会调用子类中的析构函数，
+	导致子类如果有堆区属性，会出现内存的泄漏情况。
+	解决:将父类的析构函数改为虚析构
+	*/
+	delete animal;
+}
+int main(void)
+{
+	test01();
+	system(&quot;pause&quot;);
+	return 0;
+}"></outline>
+							</outline>
+							<outline text="总结">
+								<outline text="虚析构或纯虚析构就是用来解决通过父类指针释放子类对象问题"></outline>
+								<outline text="如果子类中没有堆区数据，可以不写为虚析构或纯虚析构"></outline>
+								<outline text="拥有纯虚析构函数的类也属于抽象类"></outline>
+							</outline>
+						</outline>
+					</outline>
+				</outline>
+			</outline>
+			<outline text="写在前面，必看">
+				<outline text="这份总结是我根据自己的记忆进行整理的，可能有些内容的缺漏，但是重点难点肯定是不会缺省的。C++是一门实践课程，所以在每获取一个理论点后必须要结合实际去实践才能真正掌握，在这个思维导图中有很多代码，这些代码不是放在思维导图里面看的，而是把他们复制到自己的IDE中去运行看看到底为什么是这样子，这部分的代码都十分基础，理解起来不会有困难。如果C++还是搞不懂的建议上 b站看看黑马程序员的C++课程，深入浅出简单易懂，十分推荐。平时的题目如果遇到较长时间都打不出来的建议去CSDN看看别人的解法，不是一定要自己全部打出来，因为那样会比较浪费时间而且很低效，前面一直在学习和模仿后面才能打出自己的东西，而且CSDN的oj代码是很全的，所以多去学习，积极点，C++这门课不会有太大困难的"></outline>
+			</outline>
+		</outline>
+	</body>
+</opml>

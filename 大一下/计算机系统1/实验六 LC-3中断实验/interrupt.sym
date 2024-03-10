@@ -1,0 +1,14 @@
+//Symbol Name		Page Address
+//----------------	------------
+//	COUNT                   3050
+//	DELAY                   304A
+//	REP                     304C
+//	SaveR1                  3051
+//	again                   3005
+//	enable                  3055
+//	inter                   3056
+//	kbsr                    3053
+//	stack                   3052
+//	string1                 300C
+//	string2                 302B
+//	vector                  3054

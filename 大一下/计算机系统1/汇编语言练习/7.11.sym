@@ -1,0 +1,19 @@
+//Symbol Name		Page Address
+//----------------	------------
+//	BINARY                  303C
+//	BINEND                  3044
+//	CHAR1                   3035
+//	CHAR2                   3036
+//	DEC                     303B
+//	DONECUR                 301F
+//	FINISH                  3034
+//	GETNUMS                 300C
+//	HEX                     303A
+//	ISHEXNUM                3038
+//	LOOP                    3014
+//	LPCUR                   3016
+//	ONENUM                  302C
+//	STLP                    3028
+//	STORCH                  302D
+//	TONUMBER                3039
+//	ZEROCHAR                3037

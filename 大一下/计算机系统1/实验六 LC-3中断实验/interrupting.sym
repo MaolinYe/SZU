@@ -1,0 +1,11 @@
+//Symbol Name		Page Address
+//----------------	------------
+//	count                   201E
+//	ddr                     201D
+//	dsr                     201C
+//	kbdr                    201B
+//	kbsr                    201A
+//	lf                      201F
+//	return                  2006
+//	show                    200D
+//	tail                    2013
