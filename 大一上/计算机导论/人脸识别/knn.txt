@@ -1,0 +1,82 @@
+%使用该程序时，注意将.m文件拖动到FERET_80的文件夹中，然后运行时记得先创建一个脚本，在脚本中运行
+
+clc;clear;
+
+K=3;%KNN算法中的K值
+
+%读取指定文件夹中.tif文件名称,存储为结构体
+Data_name=dir('*.tif');%检索FERET_80文件夹中后缀为.tif的文件，存储对应信息
+A=imread(Data_name(1).name);%读入第一张图片
+A=double(A);%转换成矩阵形式
+A=A(:);%转换成列矩阵
+[m,~]=size(A);%确定图片格式
+
+trainData=zeros(m,0);%初始化trainData
+train_label=zeros(1,0);%初始化train_label
+
+%每一组前Tr张做train，第Te到倒数第二张张做test
+Tr=4;
+Te=5;
+
+for j=1:7:274%此处只读取了前（274-1）/7 组数据
+    for i=j:j+Tr-1
+        A=imread(Data_name(i).name);%读入对应组的图片
+        A=double(A);%转换格式
+        A=A(:);%转换格式
+        trainData=[trainData,A];%存储图片的数据
+        train_label=[train_label;j];%建立图片自身的编码（7*k+1）
+    end
+end
+
+testData=zeros(m,0);%初始化
+test_label=zeros(1,0);%初始化
+
+%同理
+for j=1:7:280
+    for i=j+Te-1:j+5
+        A=imread(Data_name(i).name);
+        A=double(A);
+        A=A(:);
+        testData=[testData,A];
+        test_label=[test_label;j];
+    end
+end
+
+
+%开始KNN算法
+[~,Z]=size(testData);%读取有多少组testData
+error=0;%初始化错误次数
+for j=1:Z
+    [N,A]=size(trainData);%判断trainData的矩阵行列数
+    %存储距离
+    dist=zeros(A,1);%初始化存储距离的矩阵
+    for i=1:A
+        Dist=0;%初始化距离
+        for k=1:N
+            Dist=Dist+(testData(k,j) - trainData(k,i))^2;%迭代算距离
+        end
+        dist(i,1)=Dist;%将每此歌testData对应第i个trainData总距离存储入矩阵
+    end
+    
+   [~,B]=sort(dist);%排序,B是存储了从最小到最大的数对应的位置的列矩阵
+    C=[];%初始化
+ for i=1:K
+    Q=floor((B(i,1)-1)/Tr)*7+1;%将数据与对应编号建立联系
+    C=[C,Q];%存储前K个小的距离所对应的图像对应编码
+ end
+
+    [idx,M]=mode(C);%找出最多的编码
+    if M==1%防止某些图像识别度过低，电脑乱来
+        idx=C(1,1);%存储距离最近的对应的编码
+    end
+    
+    %输出阶段性结果，便于对照识别
+    fprintf('该数据真实类别为%d  ',test_label(j,1));
+    fprintf('该数据判断类别为%d\n',idx);
+    if idx~=test_label(j,1)%检查判断的有效程度
+        error=error+1;
+    end
+end
+%输出结果
+Right=(Z-error)/Z;
+fprintf('正确率为%.2f%%\n',Right*100);

@@ -1,0 +1,73 @@
+K=1;
+    Data=dir('C:\ORL56_46\*.bmp');
+    lengthf=length(Data);
+    A=imread(Data(1).name);
+    A=double(A);
+    A=A(:);
+    [m,~]=size(A);
+    traindata=zeros(m,0);
+    trainlabel=zeros(1,0);
+    trainnumber=5;
+    testnumber=6;
+    X=zeros(m,0);
+    for i=1:lengthf
+    A=imread(Data(i).name);
+    A=double(A);
+    A=A(:);
+    X=[X,A];
+    end
+    X=X-ones(size(X,1),1)*mean(X);
+    c=X*X'/size(X,2);
+    [e,d]=eig(c);
+    [dummy,order]=sort(diag(-d));
+    e=e(:,order);
+    e=e(:,1:50);
+    X=e'*X;
+    for j=1:10:lengthf
+        for i=j:j+4
+            A=X(:,i);
+            A=double(A);
+            A=A(:);
+            traindata=[traindata,A];
+            trainlabel=[trainlabel,j];
+        end
+    end
+    testdata=zeros(m,0);
+    testlabel=zeros(1,0);
+    for j=1:10:lengthf
+        for i=j+5:j+9
+            A=X(:,i);
+            A=double(A);
+            A=A(:);
+            testdata=[testdata,A];
+            testlabel=[testlabel;j];
+        end
+    end
+    [~,Z]=size(testdata);
+    error=0;
+    for j=1:Z
+        [N,A]=size(traindata);
+        dist=zeros(A,1);
+        for i=1:A
+            Dist=0;
+            for k=1:N
+                Dist=Dist+(testdata(k,j)-traindata(k,i))^2;
+            end
+            dist(i,1)=Dist;
+        end
+        [~,B]=sort(dist);
+        C=[];
+        for i=1:K
+            Q=floor((B(i,1)-1)/trainnumber)*10+1;
+            C=[C,Q];
+        end
+        [idx,M]=mode(C);
+        if M==1
+            idx=C(1,1);
+        end
+        if idx~=testlabel(j,1)
+            error=error+1;
+        end
+    end
+    rate=(Z-error)/Z;
+    fprintf('%.2f%%\n',rate*100);

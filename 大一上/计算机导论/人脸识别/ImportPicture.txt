@@ -1,0 +1,51 @@
+%使用该程序时，注意将.m文件拖动到FERET_80的文件夹中，然后运行时记得先创建一个脚本，在脚本中运行
+
+clc;clear;
+%导入数据
+Data_struct=dir('*.tif');
+
+%人工分类
+cycle=7;%七个图片为一组
+train_number=4;%每组取前（）个做train组
+test_number=2;%每组取train后几个做test组
+ALL=40;%总共取（）组
+
+if train_number+test_number>cycle
+    fprintf('错误，请注意循环结构');
+end
+
+[train_label,trainData,testData,test_label]=importpicture(cycle,ALL,train_number,test_number,Data_struct);
+
+function [train_label,trainData,testData,test_label]=importpicture(cycle,ALL,train_number,test_number,Data_struct)
+A=imread(Data_struct(1).name);%读入第一张图片
+A=double(A);%转换成矩阵形式
+A=A(:);%转换成列矩阵
+[m,n]=size(A);%确定图片格式
+train_label=zeros(1,train_number*ALL);%初始化
+trainData=zeros(m*n,0);%初始化
+x=1;%中间变量
+for j=1:ALL
+    for i=(j-1)*cycle+1:(j-1)*cycle+train_number
+        A=imread(Data_struct(i).name);%读入第一张图片
+        A=double(A);%转换成矩阵形式
+        A=A(:);%转换成列矩阵
+        trainData=[trainData,A];
+        train_label(1,x)=j;
+        x=x+1;
+    end
+end
+
+test_label=zeros(2,test_number*ALL);
+testData=zeros(m*n,0);
+x=1;
+for j=1:ALL
+    for i=(j-1)*cycle+train_number+1:(j-1)*cycle+train_number+test_number
+        A=imread(Data_struct(i).name);%读入第一张图片
+        A=double(A);%转换成矩阵形式
+        A=A(:);%转换成列矩阵
+        testData=[testData,A];
+        test_label(1,x)=j;
+        x=x+1;
+    end
+end
+end
