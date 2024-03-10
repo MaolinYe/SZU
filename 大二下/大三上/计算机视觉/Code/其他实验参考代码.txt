@@ -1,0 +1,13 @@
+上机实验：
+3.图像去噪
+https://docs.opencv.org/master/dc/dd3/tutorial_gausian_median_blur_bilateral_filter.html
+4.图像阈值
+https://docs.opencv.org/master/db/d8e/tutorial_threshold.html
+5.形态学运算
+https://docs.opencv.org/master/db/df6/tutorial_erosion_dilatation.html
+
+附加实验
+1.Fourier变换
+C:\opencv\sources\samples\cpp\tutorial_code\core\discrete_fourier_transform
+2.目标计数
+https://blog.csdn.net/qq_34745295/article/details/79411564
