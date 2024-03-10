@@ -1,0 +1,3 @@
+C:/Users/Yezi/Desktop/C++/TraceVirtualize/cmake-build-debug/CMakeFiles/TraceVirtualize.dir
+C:/Users/Yezi/Desktop/C++/TraceVirtualize/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Yezi/Desktop/C++/TraceVirtualize/cmake-build-debug/CMakeFiles/rebuild_cache.dir
