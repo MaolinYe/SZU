@@ -1,0 +1,10 @@
+A=[2 10 0 -3;-3 -4 -12 13;1 2 3 -4;4 14 9 -13];
+[L,U,P]=lu(A);
+disp(rats(L));
+disp(rats(U));
+disp(L*U);
+b=[10;5;-2;7];
+y=U\(P*b);
+x=A\b;
+disp(rats(x));
+disp(A*x);
