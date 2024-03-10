@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.23)
+project(Bridge)
+set(CMAKE_CXX_STANDARD 14)
+add_executable(Bridge main.cpp benchmark.h disjoint.h lowestCommonAncestor.h)
+MATH(EXPR stack_size "100*1024*1024")
+set(CMAKE_EXE_LINKER_FLAGS "-Wl,--stack,${stack_size}")
